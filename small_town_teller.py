@@ -1,6 +1,3 @@
-import types
-
-
 class Person:
     def __init__(self, customer_id, first_name, last_name):
         self.customer_id = customer_id
@@ -41,6 +38,9 @@ class Bank:
             self.account[account.acc_number] = account.balance
         else:
             print("Account number already exists!")
+
+    def delete_account(self, acc_number):
+        del self.account[acc_number]
 
     def deposit(self, acc_number, amount):
         self.account[acc_number] += amount
