@@ -15,7 +15,7 @@ class Person:
 
 
 class Account:
-    def __init__(self, acc_number, acc_type, acc_owner, balance):
+    def __init__(self, acc_number, acc_type, acc_owner, balance=0):
         self.acc_number = acc_number
         self.acc_type = acc_type
         self.acc_owner = acc_owner
@@ -31,10 +31,10 @@ class Bank:
         self.account = {}
 
     def add_customer(self, person):
-        if person.customer_id in self.customer:
+        if person.customer_id not in self.customer:
             self.customer.append(person.customer_id)
         else:
-            print("please register customer first!")
+            print("Err: Customer_id in the system!")
 
     def add_account(self, account):
         if account not in self.account:
@@ -43,16 +43,18 @@ class Bank:
             print("Account number already exists!")
 
     def deposit(self, acc_number, amount):
-        self.account[acc_balance] += amount
+        self.account[acc_number] += amount
+        print("Deposit :", amount)
 
-    def withdraw(self, act_number, amount):
+    def withdrawal(self, acc_number, amount):
+        self.account[acc_number] -= amount
         if self.account[acc_number] >= amount:
-            self.account[acc_bnumber] -= amount
+            print("Withdrawal : ", amount)
         else:
             print("Transaction declined! ")
 
     def balance_inquiry(self, acc_number):
-        print(f'Account Balance = {sel.account[account_number]}')
+        print(f'Account Balance = {self.account[acc_number]}')
 
 
 from small_town_teller import Person, Account, Bank
@@ -60,7 +62,7 @@ from small_town_teller import Person, Account, Bank
 zc_bank = Bank()
 bob = Person(1, "Bob", "Smith")
 zc_bank.add_customer(bob)
-bob_savings = Account(1001, "SAVINGS", bob, balance)
+bob_savings = Account(1001, "SAVINGS", bob)
 zc_bank.add_account(bob_savings)
 zc_bank.balance_inquiry(1001)
 # 0
@@ -70,11 +72,3 @@ zc_bank.balance_inquiry(1001)
 zc_bank.withdrawal(1001, 128)
 zc_bank.balance_inquiry(1001)
 # 128.02
-
-
-# Traceback (most recent call last):
-#   File "/Users/mtessema/PythonFundamentals.Exercises.Part10/small_town_teller.py", line 58, in <module>
-#     from small_town_teller import Person, Account, Bank
-#   File "/Users/mtessema/PythonFundamentals.Exercises.Part10/small_town_teller.py", line 63, in <module>
-#     bob_savings = Account(1001, "SAVINGS", bob, balance)
-# NameError: name 'balance' is not defin
