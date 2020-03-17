@@ -1,3 +1,7 @@
+from typing import Dict
+from persistent_small_town_teller import PersistenceUtils
+
+
 class Person:
     def __init__(self, customer_id, first_name, last_name):
         self.customer_id = customer_id
@@ -24,51 +28,48 @@ class Account:
 
 class Bank:
     def __init__(self):
-        self.customer = []
-        self.account = {}
+        self.customer: Dict[int, Person] = Dict()
+        self.account : Dic[int, Account] = Dict()
 
-    def add_customer(self, person):
-        if person.customer_id not in self.customer:
-            self.customer.append(person.customer_id)
+    def add_customer(self, customer:Person) -> None:
+        if customer_id in self.customer:
+            raise ValueError(f"{customer_id} already exists")
         else:
-            print("Err: Customer_id in the system!")
+            self.customer[customer_id] = customer
 
-    def add_account(self, account):
-        if account not in self.account:
-            self.account[account.acc_number] = account.balance
+    def add_account(self, account:Acoount):
+        if account.customer_id not in self.customer:
+            raise ValueError(f"{account.customer_id} not valid customer_id")
+        elif account.acc_number in self.account:
+            raise ValueError(f"{account.acc_number} already exists")
         else:
-            print("Account number already exists!")
+            self.account[account.acc_number] = account
 
-    def delete_account(self, acc_number):
-        del self.account[acc_number]
+    def delete_account(self, acc_number:int):
+        if acc_number in self.account:
+            del self.account[acc_number]
+        else:
+            raise ValueError(f"{account.acc_number} do not exist")
 
     def deposit(self, acc_number, amount):
         self.account[acc_number] += amount
         print("Deposit :", amount)
 
     def withdrawal(self, acc_number, amount):
-        self.account[acc_number] -= amount
         if self.account[acc_number] >= amount:
             print("Withdrawal : ", amount)
         else:
-            print("Transaction declined! ")
+            raise ValueError (f"Transaction declined {account.acc_number}  not enough amount")
 
     def balance_inquiry(self, acc_number):
         print(f'Account Balance = {self.account[acc_number]}')
 
+    def save_data(self):
+        PersistenceUtils.write_pickle("customer.pickle", self.customer)
+        PersistenceUtils.write_pickle("account.pickle", self.account)
 
-from small_town_teller import Person, Account, Bank
+    def load_data(self):
+        self.customer = PersistenceUtils.load_pickle("customer.pickle")
+        sel.account = PersistenceUtils.load_pickle("account.pickle")
 
-zc_bank = Bank()
-bob = Person(1, "Bob", "Smith")
-zc_bank.add_customer(bob)
-bob_savings = Account(1001, "SAVINGS", bob)
-zc_bank.add_account(bob_savings)
-zc_bank.balance_inquiry(1001)
-# 0
-zc_bank.deposit(1001, 256.02)
-zc_bank.balance_inquiry(1001)
-# 256.02
-zc_bank.withdrawal(1001, 128)
-zc_bank.balance_inquiry(1001)
-# 128.02
+

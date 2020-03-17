@@ -3,24 +3,19 @@ import os
 from small_town_teller import Person, Account, Bank
 
 
-def write_pickle():
-    custd = self.customer
-    acctd = self.account
-    dap_out = open(account_data.pickle, "wb")
-    pickle.dump(acctd,dap_out)
-    dap_out.close()
+class PersistenceUtils:
+    def __init__(self):
+        pass
 
-    dcp_out = open(customer_data.pickle, "wb")
-    pickle.dump(acctd,dcp_out)
-    dcp_out.close()
+    @staticmethod
+    def write_pickle(file_path, data):
+        with open(file_path, "wb") as f:
+            pickle.dump(data, f)
 
-
-def load_pickle():
-    dcp_load = open(customer_data.pickle, "rb")
-    read_file = pickle.load(dcp_load)
-
-
-    dap_load = open(account_data.pickle, "rb")
-    read_file = pickle.load(dap_load)
+    @staticmethod
+    def load_pickle(file_path):
+        with open(file_path, "rb") as f:
+            data = pickle.load(f)
+        return data
 
 
