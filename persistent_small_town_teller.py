@@ -1,6 +1,5 @@
 import pickle
 import os
-from small_town_teller import Person, Account, Bank
 
 
 class PersistenceUtils:
@@ -17,5 +16,3 @@ class PersistenceUtils:
         with open(file_path, "rb") as f:
             data = pickle.load(f)
         return data
-
-
